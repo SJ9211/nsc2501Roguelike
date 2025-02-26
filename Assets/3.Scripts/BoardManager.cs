@@ -23,7 +23,7 @@ public class BoardManager : MonoBehaviour
     public Tile[] wallTiles;
     public PlayerController Player;
     #endregion
-    void Start()
+    public void Init()
     {
         m_Grid = GetComponentInChildren<Grid>();
         m_Tilemap = GetComponentInChildren<Tilemap>();

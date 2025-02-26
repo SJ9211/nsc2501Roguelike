@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
         // 보드에서의 player위치 지정 => 화면에서 제대로된 위치에 표시
         MoveTo(cell);
+
     }
 
     public void MoveTo(Vector2Int cell)
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
             if (cellData != null && cellData.Passable)
             {
+                GameManager.Instance.turnManager.Tick();
                 MoveTo(newCellTarget);
             }
         }
