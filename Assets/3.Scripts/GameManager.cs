@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     // property
     public TurnManager turnManager { get; private set; }
 
+
     private int m_FoodAmount = 100;
     private Label m_FoodLabel;
 
@@ -38,15 +39,15 @@ public class GameManager : MonoBehaviour
         PlayerController.Spawn(BoardManager, new Vector2Int(1, 1));
     }
 
-    void OnTurnHappen()
+    public void ChangeFood(int amount)
     {
         m_FoodAmount -= 1;
         m_FoodLabel.text = $"Food :  {m_FoodAmount:000}";
     }
 
     // Update is called once per frame
-    void Update()
+    void OnTurnHappen()
     {
-
+        ChangeFood(-1);
     }
 }

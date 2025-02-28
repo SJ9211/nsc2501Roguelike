@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
@@ -23,9 +26,10 @@ public class BoardManager : MonoBehaviour
     public int Width;
     public int Heigth;
     public Tile[] GroundTiles;
-    public Tile[] wallTiles;
+    public Tile[] wallTiles; // 화면의 테두리
     public PlayerController Player;
     public FoodObject[] FoodPrefab;
+    public WallObject[] WallPrefab; // 부셔지는 벽
     public int minFood;
     public int maxFood;
     #endregion
@@ -65,6 +69,7 @@ public class BoardManager : MonoBehaviour
         Player.Spawn(this, new Vector2Int(1, 1));
         // 플레이어가 등장하는 위치는 빈타일이 아니므로 빼준다.
         m_EmptyCellsList.Remove(new Vector2Int(1, 1));
+        GenerateWall();
         GenerateFood();
     }
 
@@ -72,6 +77,17 @@ public class BoardManager : MonoBehaviour
     public Vector3 CellToWorld(Vector2Int cellIndex)
     {
         return m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
+    }
+
+    public void SetCellTile(Vector2Int cellIndex, Tile tile)
+    {
+        m_Tilemap.SetTile(new Vector3Int(cellIndex.x, cellIndex.y, 0), tile);
+    }
+
+    public Tile GetCellTile(Vector2Int cellIndex)
+    {
+        return m_Tilemap.GetTile<Tile>
+                (new Vector3Int(cellIndex.x, cellIndex.y, 0));
     }
 
     public CellData GetCellData(Vector2Int cellIndex)
@@ -97,10 +113,31 @@ public class BoardManager : MonoBehaviour
             m_EmptyCellsList.RemoveAt(randomIndex);
             int foodType = Random.Range(0, FoodPrefab.Length); // Prefab 자체를 배열로만듬 
             FoodObject newFood = Instantiate(FoodPrefab[foodType]);
-            CellData data = m_BoardData[coord.x, coord.y];
-            newFood.transform.position = CellToWorld(coord);
-            data.ContainedObject = newFood;
+            AddObject(newFood, coord);
 
         }
+    }
+
+    private void GenerateWall()
+    {
+        int wallCount = Random.Range(6, 10);
+        for (int i = 0; i < wallCount; i++)
+        {
+            int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
+            Vector2Int coord = m_EmptyCellsList[randomIndex];
+
+            m_EmptyCellsList.RemoveAt(randomIndex);
+            int wallType = Random.Range(0, WallPrefab.Length);
+            WallObject newWall = Instantiate(WallPrefab[wallType]);
+            AddObject(newWall, coord);
+        }
+    }
+
+    private void AddObject(CellObject obj, Vector2Int coord)
+    {
+        CellData data = m_BoardData[coord.x, coord.y];
+        obj.transform.position = CellToWorld(coord);
+        data.ContainedObject = obj;
+        obj.Init(coord);
     }
 }
