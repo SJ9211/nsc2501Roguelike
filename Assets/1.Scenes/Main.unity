@@ -170,9 +170,15 @@ MonoBehaviour:
   Player: {fileID: 975864880}
   FoodPrefab:
   - {fileID: 5193109744036465270, guid: ca179f6c2adbc544f9e2ea26215fa70e, type: 3}
+  - {fileID: 5537295805919270727, guid: e81848a88d44b8342b2c5d44e3e91068, type: 3}
   - {fileID: 3727725461546662028, guid: 780c867bae0a11849ad99cc069515a67, type: 3}
-  minFood: 2
-  maxFood: 6
+  - {fileID: 6521046628579832834, guid: 51b2fc6fe3a604a419a280df0370e459, type: 3}
+  WallPrefab:
+  - {fileID: 823266815552608449, guid: a083dffcbb0d3b54895c4d9f489abe95, type: 3}
+  - {fileID: 2489752356372332591, guid: c9bacdbf3df8bb54897c012dfd18d8f7, type: 3}
+  - {fileID: -7071727902146426420, guid: 9344a5a19a6969743b04cf203ace3761, type: 3}
+  minFood: 4
+  maxFood: 8
 --- !u!156049354 &237848091
 Grid:
   m_ObjectHideFlags: 0
@@ -199,7 +205,7 @@ Transform:
   m_Children:
   - {fileID: 2071348963}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -283,7 +289,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &764495066
 GameObject:
