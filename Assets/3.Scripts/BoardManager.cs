@@ -30,6 +30,7 @@ public class BoardManager : MonoBehaviour
     public PlayerController Player;
     public FoodObject[] FoodPrefab;
     public WallObject[] WallPrefab; // 부셔지는 벽
+    public ExitCellObject ExitCellPrefab;
     public int minFood;
     public int maxFood;
     #endregion
@@ -69,8 +70,33 @@ public class BoardManager : MonoBehaviour
         Player.Spawn(this, new Vector2Int(1, 1));
         // 플레이어가 등장하는 위치는 빈타일이 아니므로 빼준다.
         m_EmptyCellsList.Remove(new Vector2Int(1, 1));
+
+        // Exit 만드는 방법
+        Vector2Int endCorrd = new Vector2Int(Width - 2, Heigth - 2);
+        AddObject(Instantiate(ExitCellPrefab), endCorrd);
+        m_EmptyCellsList.Remove(endCorrd);
+
         GenerateWall();
         GenerateFood();
+    }
+
+    public void Clean()
+    {
+        if (m_BoardData == null) return;
+
+        for (int y = 0; y < Heigth; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                var CellData = m_BoardData[x, y];
+                if (CellData.ContainedObject != null)
+                {
+                    // 
+                    Destroy(CellData.ContainedObject.gameObject);
+                }
+                SetCellTile(new Vector2Int(x, y), null);
+            }
+        }
     }
 
 
