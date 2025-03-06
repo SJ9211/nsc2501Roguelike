@@ -178,6 +178,8 @@ MonoBehaviour:
   - {fileID: 2489752356372332591, guid: c9bacdbf3df8bb54897c012dfd18d8f7, type: 3}
   - {fileID: -7071727902146426420, guid: 9344a5a19a6969743b04cf203ace3761, type: 3}
   ExitCellPrefab: {fileID: 4482743054913924367, guid: e09a6ea055009fa4183189c8230fa9e6, type: 3}
+  EnemyPrefab:
+  - {fileID: 8180130682994044721, guid: c7dd0157a4c25d34980d574a4668e8ca, type: 3}
   minFood: 4
   maxFood: 8
 --- !u!156049354 &237848091

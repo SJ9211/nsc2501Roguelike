@@ -31,6 +31,7 @@ public class BoardManager : MonoBehaviour
     public FoodObject[] FoodPrefab;
     public WallObject[] WallPrefab; // 부셔지는 벽
     public ExitCellObject ExitCellPrefab;
+    public EnemyObject[] EnemyPrefab;
     public int minFood;
     public int maxFood;
     #endregion
@@ -78,6 +79,7 @@ public class BoardManager : MonoBehaviour
 
         GenerateWall();
         GenerateFood();
+        GenerateEnemy();
     }
 
     public void Clean()
@@ -156,6 +158,21 @@ public class BoardManager : MonoBehaviour
             int wallType = Random.Range(0, WallPrefab.Length);
             WallObject newWall = Instantiate(WallPrefab[wallType]);
             AddObject(newWall, coord);
+        }
+    }
+    
+    private void GenerateEnemy()
+    {
+        int enemyCount = Random.Range(1, 3);
+        for (int i = 0; i < enemyCount; i++)
+        {
+            int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
+            Vector2Int coord = m_EmptyCellsList[randomIndex];
+
+            m_EmptyCellsList.RemoveAt(randomIndex);
+            int enemyType = Random.Range(0, EnemyPrefab.Length);
+            EnemyObject newEnemy = Instantiate(EnemyPrefab[enemyType]);
+            AddObject(newEnemy, coord);
         }
     }
 
