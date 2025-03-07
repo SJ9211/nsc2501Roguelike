@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class EnemyObject : CellObject
 {
-    public int Health = 3;
+    public int Health = 2;
     private int m_CurrentHealth;
     private void Awake()
     {
@@ -78,12 +78,12 @@ public class EnemyObject : CellObject
                 {
                     TryMoveInY(yDist);
                 }
-                else
+            }
+            else
+            {
+                if (!TryMoveInY(yDist))
                 {
-                    if (!TryMoveInY(yDist))
-                    {
-                        TryMoveInX(xDist);
-                    }
+                    TryMoveInX(xDist);
                 }
             }
         }

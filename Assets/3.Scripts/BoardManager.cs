@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -77,6 +75,9 @@ public class BoardManager : MonoBehaviour
         AddObject(Instantiate(ExitCellPrefab), endCorrd);
         m_EmptyCellsList.Remove(endCorrd);
 
+        // 레벨에 따른 오브젝트 수 조정
+        
+
         GenerateWall();
         GenerateFood();
         GenerateEnemy();
@@ -146,6 +147,23 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    /*
+    private void AdjustObjectCount(bool isAdd, int ratio, ref int min, ref int max)
+    {
+        int val = GameManager.Instance.Level / ratio;
+        int tmp;
+        if (isAdd)
+        {
+            tmp = min + val;
+            if( tmp < max) max = tmp;
+        }
+        else
+        {
+            tmp = max - val;
+            if ( tmp < min) min = tmp;
+        }
+    }
+    */
     private void GenerateWall()
     {
         int wallCount = Random.Range(6, 10);
@@ -163,7 +181,7 @@ public class BoardManager : MonoBehaviour
     
     private void GenerateEnemy()
     {
-        int enemyCount = Random.Range(1, 3);
+        int enemyCount = Random.Range(2, 4);
         for (int i = 0; i < enemyCount; i++)
         {
             int randomIndex = Random.Range(0, m_EmptyCellsList.Count);

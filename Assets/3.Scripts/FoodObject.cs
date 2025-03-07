@@ -5,6 +5,7 @@ using UnityEngine;
 public class FoodObject : CellObject
 {
     public int AmountGranted = 10;
+
     public override void PlayerEnterd()
     {
         // Food 없애기
@@ -13,4 +14,5 @@ public class FoodObject : CellObject
         // 플레이어의 체력(Food) 증가
         GameManager.Instance.ChangeFood(AmountGranted);
     }
+
 }

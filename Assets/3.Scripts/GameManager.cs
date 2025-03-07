@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
 using UnityEngine.UIElements;
@@ -12,16 +13,17 @@ public class GameManager : MonoBehaviour
     public BoardManager BoardManager;
     public PlayerController PlayerController;
     public UIDocument UIDoc;
+    
 
     // property
     public TurnManager turnManager { get; private set; }
     #endregion
 
     #region private
-    private const int START_FOOD_AMOUNT = 100;
+    private const int START_FOOD_AMOUNT = 30;
     private int m_FoodAmount = 3;
     private Label m_FoodLabel;
-    private int m_CurrentLevel = 1;
+    private int m_CurrentLevel;
     private VisualElement m_GameOverPanel;
     private Label m_GameOverMessage;
     #endregion
@@ -40,8 +42,6 @@ public class GameManager : MonoBehaviour
         m_FoodLabel = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
         m_FoodLabel.text = $"Food :  {m_FoodAmount}";
 
-        NewLevel();
-
         turnManager = new TurnManager();
         turnManager.OnTick += OnTurnHappen;
 
@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         StartNewGame();
     }
 
+    
     public void StartNewGame()
     {
         m_GameOverPanel.style.visibility = Visibility.Hidden;
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeFood(int amount)
     {
-        m_FoodAmount -= 1;
+        m_FoodAmount += amount;
         m_FoodLabel.text = $"Food :  {m_FoodAmount:000}";
 
         if (m_FoodAmount <= 0)
