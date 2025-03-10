@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public BoardManager BoardManager;
     public PlayerController PlayerController;
     public UIDocument UIDoc;
-    
+
 
     // property
     public TurnManager turnManager { get; private set; }
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private int m_CurrentLevel;
     private VisualElement m_GameOverPanel;
     private Label m_GameOverMessage;
+    private AudioSource audioSource;
     #endregion
 
     private void Awake()
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         m_FoodLabel = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
         m_FoodLabel.text = $"Food :  {m_FoodAmount}";
 
@@ -53,7 +55,7 @@ public class GameManager : MonoBehaviour
         StartNewGame();
     }
 
-    
+
     public void StartNewGame()
     {
         m_GameOverPanel.style.visibility = Visibility.Hidden;
@@ -99,5 +101,10 @@ public class GameManager : MonoBehaviour
     void OnTurnHappen()
     {
         ChangeFood(-1);
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }

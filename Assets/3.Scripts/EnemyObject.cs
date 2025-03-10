@@ -8,6 +8,7 @@ using UnityEngine;
 public class EnemyObject : CellObject
 {
     public int Health = 2;
+    public AudioClip Clip;
     private int m_CurrentHealth;
     private void Awake()
     {
@@ -69,6 +70,7 @@ public class EnemyObject : CellObject
             || (yDist == 0 && absXDist == 1))
         {
             GameManager.Instance.ChangeFood(-3);
+            GameManager.Instance.PlaySound(Clip);
         }
         else
         {

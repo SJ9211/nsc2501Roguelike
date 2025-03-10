@@ -75,9 +75,6 @@ public class BoardManager : MonoBehaviour
         AddObject(Instantiate(ExitCellPrefab), endCorrd);
         m_EmptyCellsList.Remove(endCorrd);
 
-        // 레벨에 따른 오브젝트 수 조정
-        
-
         GenerateWall();
         GenerateFood();
         GenerateEnemy();
@@ -178,7 +175,7 @@ public class BoardManager : MonoBehaviour
             AddObject(newWall, coord);
         }
     }
-    
+
     private void GenerateEnemy()
     {
         int enemyCount = Random.Range(2, 4);

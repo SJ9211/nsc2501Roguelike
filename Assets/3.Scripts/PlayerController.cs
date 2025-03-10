@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private bool m_IsMoving;
     private Vector3 m_MoveTarget;
     private Animator m_Animator;
+    private Vector2Int newCellTarget;
+    private bool hasMoved = false;
     #endregion
 
     private void Awake()
@@ -56,7 +58,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-        // references 함수가 쓰인곳 편하게 찾는 기능
+    // references 함수가 쓰인곳 편하게 찾는 기능
     public void MoveTo(Vector2Int cell, bool immediate = false)
     {
         m_CellPosition = cell;
@@ -106,28 +108,28 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Vector2Int newCellTarget = m_CellPosition;
-        bool hasMoved = false;
+        newCellTarget = m_CellPosition;
+        hasMoved = false;
 
-        if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            newCellTarget.y += 1;
-            hasMoved = true;
+            MoveSkip();
+        }
+        else if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+        {
+            MoveUp();
         }
         else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
         {
-            newCellTarget.y -= 1;
-            hasMoved = true;
+            MoveDown();
         }
         else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
-            newCellTarget.x += 1;
-            hasMoved = true;
+            MoveRight();
         }
         else if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
         {
-            newCellTarget.x -= 1;
-            hasMoved = true;
+            MoveLeft();
         }
 
         if (hasMoved)
@@ -143,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 {
                     MoveTo(newCellTarget);
                 }
-                else 
+                else
                 {
                     if (cellData.ContainedObject.PlayerWantsToEnter())
                     {
@@ -158,5 +160,45 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void MoveSkip()
+    {
+        if (m_IsGameOver)
+        {
+            GameManager.Instance.StartNewGame();
+            return;
+        }
+
+        if (m_IsMoving) return;
+        hasMoved = true;
+    }
+
+    public void MoveUp()
+    {
+        if (m_IsMoving) return;
+        newCellTarget.y++;
+        hasMoved = true;
+    }
+
+    public void MoveDown()
+    {
+        if (m_IsMoving) return;
+        newCellTarget.y--;
+        hasMoved = true;
+    }
+
+    public void MoveLeft()
+    {
+        if (m_IsMoving) return;
+        newCellTarget.x--;
+        hasMoved = true;
+    }
+
+    public void MoveRight()
+    {
+        if (m_IsMoving) return;
+        newCellTarget.x++;
+        hasMoved = true;
     }
 }
